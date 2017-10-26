@@ -1,24 +1,36 @@
 import * as chai from "chai";
-import { Builder, until } from "selenium-webdriver";
+import { Builder, until, By, Browser, Button } from "selenium-webdriver";
 let expect = chai.expect;
 
-const browsers = {
-  chrome: "chrome",
-  firefox: "firefox",
-  opera: "opera"
-};
+let firefox = new Builder()
+  .forBrowser(Browser.CHROME)
+  .build();
 
-let firefox = new Builder().forBrowser(browsers.firefox).build();
-
-firefox.get("https://vacation.epam.com").then(() =>
-  firefox
-    .manage()
-    .timeouts()
-    .implicitlyWait(1000)
-);
 const getTitle = async () => {
   firefox.wait(until.titleContains('VACATION'));
   return firefox.getTitle();
 }
-getTitle().then(title => console.log(title))
 
+const getButton = () => {
+  // firefox.wait(until.elementIsVisible(firefox.findElement(By.id('addVac'))));
+  const addVacButton = firefox.findElement(By.css('a#addVac'));
+  return addVacButton;
+}
+const waitForPreloader = () => {
+  const preloader =
+    firefox.wait(until.elementIsVisible(firefox.findElement(By.className('block-layer'))))
+  return preloader;
+}
+firefox.get("https://vacation.epam.com");
+
+getTitle().then(title => console.log(title));
+firefox.sleep(10000).then();
+// waitForPreloader().then((preloader) => console.log(preloader.getLocation()))
+
+getButton().then(button => button.isDisplayed().then((isDisplayed) => {
+  console.log(isDisplayed)
+  button.getText().then(text => console.log(text + 'some'))
+  if (isDisplayed) {
+    button.click();
+  }
+}));

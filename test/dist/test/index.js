@@ -11,32 +11,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chai = require("chai");
 const selenium_webdriver_1 = require("selenium-webdriver");
 let expect = chai.expect;
-const browsers = {
-    chrome: "chrome",
-    firefox: "firefox",
-    opera: "opera"
-};
-let firefox = new selenium_webdriver_1.Builder().forBrowser(browsers.firefox).build();
-firefox.get("https://vacation.epam.com").then(() => firefox
-    .manage()
-    .timeouts()
-    .implicitlyWait(1000));
+let firefox = new selenium_webdriver_1.Builder()
+    .forBrowser(selenium_webdriver_1.Browser.CHROME)
+    .build();
 const getTitle = () => __awaiter(this, void 0, void 0, function* () {
     firefox.wait(selenium_webdriver_1.until.titleContains('VACATION'));
     return firefox.getTitle();
 });
+const getButton = () => {
+    // firefox.wait(until.elementIsVisible(firefox.findElement(By.id('addVac'))));
+    const addVacButton = firefox.findElement(selenium_webdriver_1.By.css('a#addVac'));
+    return addVacButton;
+};
+const waitForPreloader = () => {
+    const preloader = firefox.wait(selenium_webdriver_1.until.elementIsVisible(firefox.findElement(selenium_webdriver_1.By.className('block-layer'))));
+    return preloader;
+};
+firefox.get("https://vacation.epam.com");
 getTitle().then(title => console.log(title));
-// firefox.wait(until () => {
-//   firefox
-//     .getTitle()
-//     .then(title => {
-//       if (title == "") {
-//         console.log("wrong");
-//       } else {
-//         console.log(title);
-//       }
-//     })
-//     .catch(err => console.error(err))
-//     .catch(() => firefox.quit());
-// }, 1000);
+firefox.sleep(10000).then();
+// waitForPreloader().then((preloader) => console.log(preloader.getLocation()))
+getButton().then(button => button.isDisplayed().then((isDisplayed) => {
+    console.log(isDisplayed);
+    button.getText().then(text => console.log(text + 'some'));
+    if (isDisplayed) {
+        button.click();
+    }
+}));
 //# sourceMappingURL=index.js.map
