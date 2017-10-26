@@ -4,13 +4,15 @@
   "description": "A Node.JS seed with Mocha, Chai and Typescript",
   "main": "README.MD",
   "scripts": {
-    "test": "./node_modules/.bin/mocha ./dist/test --reporter spec",
-    "build": "./node_modules/.bin/tsc",
-    "clean": "trash ./dist",
-    "start": "npm run build && npm run test",
-    "run": "node ./dist/test/index.js"
+    "start": "ts-node test/index.ts",
+    "preinstall": "npm i ts-node -g && npm i typescript -g"
   },
-  "keywords": ["node", "mocha", "chai", "typescript"],
+  "keywords": [
+    "node",
+    "mocha",
+    "chai",
+    "typescript"
+  ],
   "author": "Cedric Chariere Fiedler",
   "license": "MIT",
   "devDependencies": {
