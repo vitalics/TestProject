@@ -1,5 +1,5 @@
 import * as chai from "chai";
-import { Builder } from "selenium-webdriver";
+import { Builder, until } from "selenium-webdriver";
 let expect = chai.expect;
 
 const browsers = {
@@ -16,16 +16,9 @@ firefox.get("https://vacation.epam.com").then(() =>
     .timeouts()
     .implicitlyWait(1000)
 );
-firefox.wait(() => {
-  firefox
-    .getTitle()
-    .then(title => {
-      if (title == "") {
-        console.log("wrong");
-      } else {
-        console.log(title);
-      }
-    })
-    .catch(err => console.error(err))
-    .catch(() => firefox.quit());
-}, 1000);
+const getTitle = async () => {
+  firefox.wait(until.titleContains('VACATION'));
+  return firefox.getTitle();
+}
+getTitle().then(title => console.log(title))
+
