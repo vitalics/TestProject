@@ -1,6 +1,8 @@
 import * as chai from "chai";
-import { Builder, until, By, Browser, Button, WebElement } from "selenium-webdriver";
+import { Builder, until, By, Browser, Button, WebElement, WebElementCondition, Locator, WebDriver } from "selenium-webdriver";
 let expect = chai.expect;
+
+import { Utils } from "./utils";
 
 let chrome = new Builder()
   .forBrowser(Browser.CHROME)
@@ -14,36 +16,41 @@ const getTitle = async () => {
  * @function async function
  */
 const getVacationButton = async () => {
-  // firefox.wait(until.elementIsVisible(firefox.findElement(By.id('addVac'))));
-  const addVacButton = chrome.findElement(By.css("a[href='/epm-vts-web/vacations/add']"));
+  const selector: string = "div>a#addVac";
+  let addVacButton: WebElement = waitForVisibleElement(chrome, chrome.findElement(By.css(selector))).then(elem => addVacButton = elem);
+  // chrome.wait(until.elementIsVisible(chrome.findElement(By.css(selector))), 5000);
+  // = chrome.findElement(By.css(selector));
   return addVacButton;
 }
+
 const waitForPreloader = () => {
   const preloader =
     chrome.wait(until.elementIsVisible(chrome.findElement(By.className('block-layer'))))
   return preloader;
 }
+
+const getDraftButton = async () => {
+  var selector = 'li.left>button#draft'
+  let draftButton = chrome.wait(until.elementIsEnabled(chrome.findElement(By.css(selector))));
+  return draftButton;
+}
+
 chrome.get("https://vacation.epam.com");
 
 getTitle().then(title => console.log(title));
-chrome.sleep(10000).then();
-// waitForPreloader().then((preloader) => console.log(preloader.getLocation()))
-
 
 getVacationButton().then(button => button.isDisplayed().then((isDisplayed) => {
   console.log(isDisplayed)
-  button.getText().then(text => console.log(text + 'some'))
+  button.getText().then(text => console.log(text))
   if (isDisplayed) {
     button.click();
   }
-}));
+})).catch(err => console.error(err));
 
-// chrome.sleep(5000);
-// var button: WebElement;
-// getButton().then(elem => button = elem)
-// chrome.wait(() => {
-//   until.elementTextContains(button, 'Add vacation')
-// }, 10000)
-//   .then(() => {
-//     button.click();
-//   });
+chrome.executeScript(() => {
+  window.scroll(0, 0)
+});
+
+getDraftButton().then(button => {
+  button.click();
+})

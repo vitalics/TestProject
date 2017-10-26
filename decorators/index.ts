@@ -1,0 +1,1 @@
+import { singleton } from './singleton'
