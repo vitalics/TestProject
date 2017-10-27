@@ -3,4 +3,6 @@
 ## installation dependencies
 ` npm i`
 ## run test
-`npm start`
+`tsc index.ts`
+### after run next command
+`node index`

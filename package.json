@@ -4,7 +4,8 @@
   "description": "A Node.JS seed with Mocha, Chai and Typescript",
   "main": "README.MD",
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "tsc index.ts",
+    "poststart": "node index.js",
     "preinstall": "npm i ts-node -g && npm i typescript -g"
   },
   "keywords": [
