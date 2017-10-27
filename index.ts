@@ -61,9 +61,9 @@ class Main {
 
   // #region scenarios
   /**
-   * firtstPageScenario
+   * addNewVacation
    */
-  public firtstPageScenario = async (): Promise<boolean> => {
+  public addNewVacation = async (): Promise<boolean> => {
     let isEnd: boolean = false;
     this.chrome.get("https://vacation.epam.com");
 
@@ -83,7 +83,7 @@ class Main {
   /**
    * secondPageScenarios
    */
-  public secondPageScenarios = async (): Promise<boolean> => {
+  public submitToDraft = async (): Promise<boolean> => {
     let isEnd: boolean = false;
 
     this.chrome.executeScript(() => {
@@ -116,13 +116,26 @@ class Main {
         )
       })
   }
+  /**
+   * deleteVacationFromDraft
+   */
+  public deleteVacationFromDraft = async (): Promise<boolean> => {
+    let isFinished: boolean = false;
+    this.chrome.getCurrentUrl().then(url => {
+      if (url == 'https://vacation.epam.com/epm-vts-web/vacations/type/me#') {
+      
+      }
+    })
+    isFinished = true;
+    return isFinished;
+  }
   // #endregion
 }
 
 let main = new Main();
-main.firtstPageScenario().then(isEnd => {
+main.addNewVacation().then(isEnd => {
   console.log('success first scenario')
 })
-  .then(() => main.secondPageScenarios()
+  .then(() => main.submitToDraft()
     .then(isEnd => console.log('success second scenario')
     ));

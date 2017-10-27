@@ -4,5 +4,5 @@
 ` npm i`
 ## run test
 `tsc index.ts`
-### after run next command
+
 `node index`
