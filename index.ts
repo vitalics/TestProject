@@ -64,21 +64,26 @@ class Main {
    * addNewVacation
    */
   public addNewVacation = async (): Promise<boolean> => {
-    let isEnd: boolean = false;
+    let isSuccess: boolean = false;
     this.chrome.get("https://vacation.epam.com");
 
-    this.getTitle().then(title => console.log(title))
+    this.getTitle()
+      .then(title => console.log(title))
 
     this.chrome.sleep(5000);
-    return this.getVacationButton().then(button => button.isDisplayed().then((isDisplayed) => {
-      button.getText().then(text => console.log(text))
-      if (isDisplayed) {
-        return button.click().then(() => {
-          isEnd = true;
-          return isEnd;
-        });
-      }
-    }));
+    return this.getVacationButton()
+      .then(button => button.isDisplayed()
+        .then((isDisplayed) => {
+          button.getText()
+            .then(text => console.log(text))
+          if (isDisplayed) {
+            return button.click()
+              .then(() => {
+                isSuccess = true;
+                return isSuccess;
+              });
+          }
+        }));
   }
   /**
    * secondPageScenarios
@@ -92,28 +97,19 @@ class Main {
 
     this.chrome.sleep(5000);
 
-    return this.getCommentArea().then(textArea => {
-      textArea.clear();
-      textArea.sendKeys('some comment');
-    })
+    return this.getCommentArea()
+      .then(textArea => {
+        textArea.clear();
+        textArea.sendKeys('some comment');
+      })
       .then(() => {
-        return this.getDraftButton().then(button => button.click()
-          .then(() => {
-            this.chrome.sleep(5000);
-            return this.getDropdownOptions().then(dropdownButton => dropdownButton.click()
-              .then(() => {
-                return this.getDeleteDraftButton().then(button => button.click()
-                  .then(() => {
-                    isEnd = true;
-                    return isEnd;
-                  }))
-              }))
-          })
-          // .then(() => {
-          //   isEnd = true;
-          //   return isEnd;
-          // })
-        )
+        return this.getDraftButton()
+          .then(button => button.click()
+            .then(() => {
+              isEnd = true;
+              return isEnd;
+            })
+          )
       })
   }
   /**
@@ -121,13 +117,41 @@ class Main {
    */
   public deleteVacationFromDraft = async (): Promise<boolean> => {
     let isFinished: boolean = false;
-    this.chrome.getCurrentUrl().then(url => {
-      if (url == 'https://vacation.epam.com/epm-vts-web/vacations/type/me#') {
-      
-      }
+    const vacationUrl = 'https://vacation.epam.com/epm-vts-web/vacations/type/me#'
+    return this.chrome.getCurrentUrl()
+      .then(url => url === vacationUrl ? this.getDropdownOptions()
+        .then(dropdownButton => dropdownButton.click()
+          .then(() => {
+            return this.getDeleteDraftButton()
+              .then(button => button.click()
+                .then(() => {
+                  isFinished = true;
+                  return isFinished;
+                }))
+          })) : this.chrome.get(vacationUrl).then(() => {
+            this.chrome.sleep(5000);
+            return this.getDropdownOptions()
+              .then(dropdownButton => dropdownButton.click()
+                .then(() => {
+                  return this.getDeleteDraftButton()
+                    .then(button => button.click()
+                      .then(() => {
+                        isFinished = true;
+                        return isFinished;
+                      }))
+                }))
+          }));
+  }
+
+  /**
+   * closeBrowser 
+   */
+  public closeBrowser = async (): Promise<boolean> => {
+    let isFinished: boolean = false;
+    return this.chrome.quit().then(() => {
+      isFinished = true;
+      return isFinished;
     })
-    isFinished = true;
-    return isFinished;
   }
   // #endregion
 }
@@ -137,5 +161,8 @@ main.addNewVacation().then(isEnd => {
   console.log('success first scenario')
 })
   .then(() => main.submitToDraft()
-    .then(isEnd => console.log('success second scenario')
+    .then(isEnd => console.log('success submit to draft'))
+    .then(() => main.deleteVacationFromDraft()
+      .then(isFinish => console.log('success delete vacation from draft'))
+      .then(() => main.closeBrowser().then(isSuccess => console.log('succesfull close browser')))
     ));
