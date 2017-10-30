@@ -1,19 +1,15 @@
 import { browser } from "protractor";
-import { SearchPageObject } from "../pages/searchPage";
-const { Given } = require("cucumber");
+import { HomePageObject } from "../pages/homePage";
+const { Given, When, Then } = require("cucumber");
 const chai = require("chai").use(require("chai-as-promised"));
 const expect = chai.expect;
 
-const search: SearchPageObject = new SearchPageObject();
+const home: HomePageObject = new HomePageObject();
 
-Given(/^I am on google page$/, async () => {
-    await expect(browser.getTitle()).to.eventually.equal("Google");
+Given(/^I am on home page$/, async () => {
+    await expect(browser.getTitle()).to.eventually.equal("VACATION - EPAM Vacation Tracking System");
 });
 
-Given(/^I am on cucumber search results page$/, async () => {
-    await expect(browser.getTitle()).to.eventually.equal("Cucumber - Пошук Google");
-});
-
-Given(/^I am on protractor search results page$/, async () => {
-    await expect(browser.getTitle()).to.eventually.equal("Protractor - Пошук Google");
-});
+When(/^I am click add new vacation$/, async () => {
+    // await browser.actions().
+})

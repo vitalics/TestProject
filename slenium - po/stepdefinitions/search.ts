@@ -1,8 +1,8 @@
 import { browser, protractor } from "protractor";
-import { SearchPageObject } from "../pages/searchPage";
+import { HomePageObject } from "../pages/searchPage";
 const { When, Then } = require("cucumber");
 
-const search: SearchPageObject = new SearchPageObject();
+const search: HomePageObject = new HomePageObject();
 
 When(/^I type "(.*?)"$/, async (text) => {
     await search.searchTextBox.sendKeys(text);

@@ -1,7 +1,7 @@
-import { SearchPageObject } from "../pages/searchPage";
+import { HomePageObject } from "../pages/searchPage";
 const { Then } = require("cucumber");
 
-const search: SearchPageObject = new SearchPageObject();
+const search: HomePageObject = new HomePageObject();
 
 Then(/^I clear the search text$/, async () => {
      await search.searchTextBox.clear();
