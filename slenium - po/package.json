@@ -1,0 +1,47 @@
+{
+  "name": "protractor-typescript-cucumber",
+  "version": "3.0.0",
+  "license": "MIT",
+  "description": "To demostrate protractor cucumber tests for angular/non angular apps with allure report framework",
+  "homepage": "https://github.com/igniteram/protractor-cucumber-typescript",
+  "keywords": [
+    "protractor",
+    "cucumber",
+    "typescript",
+    "angular",
+    "angularjs",
+    "testing",
+    "behaviour driven development",
+    "bdd",
+    "selenium",
+    "webdriverJS",
+    "gherkin",
+    "automation testing"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf typeScript/",
+    "clean-build": "npm run clean && npm run build",
+    "test": "protractor typeScript/config/config.js",
+    "webdriver-update": "webdriver-manager update",
+    "webdriver-start": "webdriver-manager start"
+  },
+  "author": "Ram Pasala <ram.pasala7@gmail.com>",
+  "devDependencies": {
+    "@types/cucumber": "^2.0.4",
+    "@types/node": "^8.0.3",
+    "@types/selenium-webdriver": "^3.0.7",
+    "chai": "^4.0.2",
+    "chai-as-promised": "^7.0.0",
+    "cucumber": "^3.0.4",
+    "cucumber-html-reporter": "^3.0.4",
+    "mkdirp": "^0.5.1",
+    "protractor": "^5.1.2",
+    "protractor-cucumber-framework": "^4.0.8",
+    "rimraf": "^2.6.2",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.5.3"
+  },
+  "repository": "https://github.com/igniteram/protractor-cucumber-typescript"
+}
