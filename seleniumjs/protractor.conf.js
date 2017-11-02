@@ -18,7 +18,7 @@ exports.config = {
     capabilities: {
         browserName: 'chrome',
         'chromeOptions': {
-            args: ['--headless','--test-type']
+            args: ['--test-type']
         }
     },
     onPrepare: function () {
