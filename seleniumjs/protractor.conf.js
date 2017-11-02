@@ -8,12 +8,14 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         silent: true,
+        restartBrowserBetweenTests: true,
         defaultTimeoutInterval: 360000,
         print: function () {
         }
     },
     specs: [
-        './spec/**.spec.js'
+        './spec/vacation.setup.spec.js',
+        './spec/vacation.remove.spec.js'
     ],
     capabilities: {
         browserName: 'chrome',
