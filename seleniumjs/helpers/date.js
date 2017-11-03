@@ -24,5 +24,4 @@ export class DateFormat {
     }
 
 }
-let date = new DateFormat();
-console.log(date.getVacs('td.startDate'))
+
