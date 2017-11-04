@@ -1,4 +1,5 @@
-const CONSTANTS = require('../helpers/constants.js');
+const CONSTANTS = require('../helpers/constants/index.js');
+const MYVACS = require('../helpers/constants/pages/myVacation.page.js');
 const PROTRACTOR = require('protractor');
 
 const browser = PROTRACTOR.browser;
@@ -18,23 +19,23 @@ describe('remove vacation', () => {
         expect(browser.getTitle()).toEqual(CONSTANTS.TITLE)
     });
     it('vacation list should be non empty', () => {
-        let vacationList = browser.findElements(PROTRACTOR.by.css(CONSTANTS.CSS_SELECTORS.ITEMS.vacation_list)).then(elements => {
+        let vacationList = browser.findElements(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.ITEMS.vacation_list)).then(elements => {
             currentVacation = elements[elements.length - 1];
             expect(elements.length).toBeGreaterThan(0);
         });
     });
     it('click to dropdown "Action" column', () => {
-        dropdownButton = currentVacation.findElement(PROTRACTOR.by.css(CONSTANTS.CSS_SELECTORS.BUTTONS.vacation_action_dropdown))
+        dropdownButton = currentVacation.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.BUTTONS.vacation_action_dropdown))
         expect(dropdownButton.isDisplayed()).toBeTruthy();
         browser.actions().click(dropdownButton).perform();
     })
     it('click "Delete request" on dropdown actions', () => {
-        updateRequestButton = currentVacation.findElement(PROTRACTOR.by.css(CONSTANTS.CSS_SELECTORS.BUTTONS.dropdown_delete_request));
+        updateRequestButton = currentVacation.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.BUTTONS.dropdown_delete_request));
         expect(updateRequestButton.isDisplayed()).toBeTruthy();
         browser.actions().click(updateRequestButton).perform();
     });
     it('should see "Request successfully deleted" message', () => {
-        let successfullMessage = browser.findElement(PROTRACTOR.by.css(CONSTANTS.CSS_SELECTORS.TEXTS.request_popup_message_successful));
+        let successfullMessage = browser.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.TEXTS.request_popup_message_successful));
         expect(successfullMessage.getText()).toEqual('Request successfully deleted')
     })
 });
