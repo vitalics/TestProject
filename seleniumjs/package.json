@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "preinstall": "webdriver-manager -g",
+    "preinstall": "npm i webdriver-manager -g",
     "postinstall": "gulp webdriver_update",
     "test": "gulp"
   },
