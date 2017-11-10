@@ -4,38 +4,41 @@ const PROTRACTOR = require('protractor');
 
 const browser = PROTRACTOR.browser;
 
+// page objects
+const vacations = require('./pageObject/vacation.vacationsPage.po.js');
+const requestFormUpdatePage = require('./pageObject/vacation.requestFormUpdate.po.js');
+
 browser.waitForAngularEnabled(false);
 
-let vacationList = [];
-let currentVacation;
-let dropdownButton;
 
 describe('remove vacation', () => {
+    let myVacations = vacations.createInstance();
+
     beforeEach(() => {
         browser.sleep(CONSTANTS.SLEEP_TIMEOUT);
     })
+    it('should crete instance of page object', () => {
+        expect(myVacations).toBeDefined();
+    });
+
     it('load site', () => {
-        browser.get(CONSTANTS.URL + '/vacations/type/me');
+        myVacations.load();
         expect(browser.getTitle()).toEqual(CONSTANTS.TITLE)
     });
     it('vacation list should be non empty', () => {
-        let vacationList = browser.findElements(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.ITEMS.vacation_list)).then(elements => {
-            currentVacation = elements[elements.length - 1];
+        myVacations.vacationList.then(elements => {
             expect(elements.length).toBeGreaterThan(0);
         });
     });
     it('click to dropdown "Action" column', () => {
-        dropdownButton = currentVacation.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.BUTTONS.vacation_action_dropdown))
-        expect(dropdownButton.isDisplayed()).toBeTruthy();
-        browser.actions().click(dropdownButton).perform();
+        expect(myVacations.dropdown.isDisplayed()).toBeTruthy();
+        myVacations.dropdown.click();
     })
     it('click "Delete request" on dropdown actions', () => {
-        updateRequestButton = currentVacation.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.BUTTONS.dropdown_delete_request));
-        expect(updateRequestButton.isDisplayed()).toBeTruthy();
-        browser.actions().click(updateRequestButton).perform();
+        expect(myVacations.dropdownDeleteButton.isDisplayed()).toBeTruthy();
+        myVacations.dropdownDeleteButton.click();
     });
     it('should see "Request successfully deleted" message', () => {
-        let successfullMessage = browser.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.TEXTS.request_popup_message_successful));
-        expect(successfullMessage.getText()).toEqual('Request successfully deleted')
-    })
+        expect(myVacations.alertMessage.getText()).toEqual('Request successfully deleted')
+    });
 });

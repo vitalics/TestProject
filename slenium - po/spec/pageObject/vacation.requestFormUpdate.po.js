@@ -15,6 +15,10 @@ class RequestFormUpdatePage {
     get leavePayType() {
         return protractor.element(protractor.by.xpath(requestFormUpdatePage.X_PATHS.pay_type))
     }
+
+    /**
+     *@description fabrical method 
+     */
     static createInstance() {
         return new RequestFormUpdatePage();
     }

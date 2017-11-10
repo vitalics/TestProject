@@ -12,8 +12,8 @@ gulp.task('webdriver_update', webdriver_update({
 
 let specs = [
     './spec/vacation.setup.spec.js',
-    // './spec/vacation.update.spec.js',
-    // './spec/vacation.remove.spec.js'
+    './spec/vacation.update.spec.js',
+    './spec/vacation.remove.spec.js'
 ];
 
 gulp.task('test', () => {
@@ -28,4 +28,4 @@ gulp.task('test', () => {
         .on('error', function (e) { throw e })
 });
 
-gulp.task('default',['webdriver_update','test'])
+gulp.task('default', ['webdriver_update', 'test']);

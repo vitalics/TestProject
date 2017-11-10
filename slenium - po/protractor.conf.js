@@ -15,8 +15,8 @@ exports.config = {
     },
     specs: [
         './spec/vacation.setup.spec.js',
-        // './spec/vacation.update.spec.js',
-        // './spec/vacation.remove.spec.js'
+        './spec/vacation.update.spec.js',
+        './spec/vacation.remove.spec.js'
     ],
     capabilities: {
         browserName: 'chrome',

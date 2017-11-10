@@ -6,7 +6,7 @@ const PROTRACTOR = require('protractor');
 // page objects
 const vacationHomePage = require('./pageObject/vacation.home.po.js');
 const requestFormCreatePage = require('./pageObject/vacation.requestFormCreate.po.js');
-const vacations = require('./pageObject/vacation.vacationsPage.po.js');
+const vacationsPage = require('./pageObject/vacation.vacationsPage.po.js');
 
 
 const browser = PROTRACTOR.browser;
@@ -20,9 +20,13 @@ describe('Set up vacation.', () => {
         browser.sleep(CONSTANTS.SLEEP_TIMEOUT);
     });
 
+    it('home page object should be defined', () => {
+        expect(mainPage).toBeDefined();
+    });
+
     it('should load site', () => {
         mainPage.load();
-        expect(CONSTANTS.TITLE).toEqual(browser.getTitle())
+        expect(mainPage.title).toEqual(CONSTANTS.TITLE)
     });
 
     it('Click "add vacation" button', () => {
@@ -36,8 +40,9 @@ describe('Set up vacation.', () => {
 
     describe('Request form.', () => {
         let requestPage = requestFormCreatePage.createInstance();
-        beforeEach(() => {
-            expect(browser.getCurrentUrl()).toContain('vacations')
+
+        it('request form page object should be defined', () => {
+            expect(requestPage).toBeDefined();
         });
 
         describe('Check default form fields on "Student" position.', () => {
@@ -51,15 +56,16 @@ describe('Set up vacation.', () => {
                 expect(requestPage.leavePayType.getText()).toEqual('General leave');
             });
             it('"Comment" filed should be empty', () => {
-                expect(requestPage.commentText).toEqual('');
+                expect(requestPage.comment.getText()).toEqual('');
             });
         });
 
         describe('Fill vacation request form fields.', () => {
             it('"Comment" field', () => {
                 let commentText = 'some comment';
-                requestPage.bindComment(commentText);
-                expect(requestPage.comment.getText()).toEqual(commentText);
+                requestPage.commentText = commentText;
+                let fakePage = new requestFormCreatePage();
+                expect(fakePage.commentText).toEqual(commentText);
             });
         });
         it('Send request to draft', () => {
@@ -70,7 +76,7 @@ describe('Set up vacation.', () => {
             expect(browser.getCurrentUrl()).toContain('/vacations');
         });
         describe('vacations page', () => {
-            let myVacations = vacations.createInstance();
+            let myVacations = vacationsPage.createInstance();
             it('Should see "Request successfully saved" alert', () => {
                 expect(myVacations.alertMessage.getText()).toEqual('Request successfully saved');
             });

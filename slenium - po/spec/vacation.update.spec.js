@@ -5,6 +5,11 @@ const URLHELPER = require('../helpers/link.helper.js');
 
 const PROTRACTOR = require('protractor');
 
+// page objects
+const vacations = require('./pageObject/vacation.vacationsPage.po.js');
+const requestFormUpdatePage = require('./pageObject/vacation.requestFormUpdate.po.js');
+
+
 const browser = PROTRACTOR.browser;
 let urlHelper = new URLHELPER();
 
@@ -16,57 +21,73 @@ let currentVacation;
 let dropdownButton;
 
 describe('Update vacation.', () => {
+    let vacationPage = vacations.createInstance();
+
     beforeEach(() => {
         browser.sleep(CONSTANTS.SLEEP_TIMEOUT);
     });
+    it('vacation page must be defined', () => {
+        expect(vacationPage).toBeDefined();
+    });
+
     it('Should load my vacations', () => {
-        browser.get(CONSTANTS.URL + '/vacations/type/me');
+        vacationPage.load();
         expect(browser.getTitle()).toEqual(CONSTANTS.TITLE)
     });
+
     it('Vacation list should be non empty', () => {
-        let vacationList = browser.findElements(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.ITEMS.vacation_list)).then(elements => {
-            currentVacation = elements[elements.length - 1];
+        let vacationList = vacationPage.vacationList.then(elements => {
             expect(elements.length).toBeGreaterThan(0);
         });
     });
+
     it('Get "data-href" link', () => {
-        currentVacation.getAttribute('data-href').then(text => {
+        vacationPage.lastVacation.getAttribute('data-href').then(text => {
             updateRequestLink = text;
-            expect(updateRequestLink.length).toBeGreaterThan(0);
+            expect(text.length).toBeGreaterThan(0);
         });
     });
+
     it('"data-herf" must be a link', () => {
-        let link = CONSTANTS.URL + updateRequestLink;
-        expect(link).toBeTruthy(urlHelper.urlIsValid(link));
+        expect(CONSTANTS.URL + updateRequestLink).toBeTruthy(urlHelper.urlIsValid(CONSTANTS.URL + updateRequestLink));
     });
+
     it('click to dropdown on "Action" column', () => {
-        dropdownButton = currentVacation.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.BUTTONS.vacation_action_dropdown))
-        expect(dropdownButton.isDisplayed()).toBeTruthy();
-        browser.actions().click(dropdownButton).perform();
+        vacationPage.dropdown.click();
+        expect(vacationPage.dropdown.isDisplayed()).toBeTruthy();
     });
+
     it('click "update request" on dropdown actions', () => {
-        updateRequestButton = currentVacation.findElement(PROTRACTOR.by.css(MYVACS.CSS_SELECTORS.BUTTONS.dropdown_update_request));
-        expect(updateRequestButton.isDisplayed()).toBeTruthy();
-        browser.actions().click(updateRequestButton).perform();
+        // vacationPage.dropdownUpdateButton.click();
+        browser.actions().click(vacationPage.dropdownUpdateButton).perform();
+        // expect(vacationPage.dropdownUpdateButton.isDisplayed()).toBeTruthy();
     });
+
     it('should redirect to "update request" form', () => {
-        updateRequestLink = updateRequestLink.replace('index', 'update')
         expect(browser.getCurrentUrl()).toBeTruthy(urlHelper.urlIsValid(CONSTANTS.URL + updateRequestLink));
-        // expect(browser.getCurrentUrl()).toEqual(CONSTANTS.URL + updateRequestLink);
     });
-    describe('check "update request" form', () => {
-        it('"Employee" must be "Vitali Haradkou"', () => {
-            let currentUser = browser.findElement(PROTRACTOR.by.xpath(UPDATEVAC.X_PATHS.update_form_user_name));
-            expect(currentUser.getText()).toEqual('Vitali Haradkou')
+
+    describe('Update form page', () => {
+        let updateFormPage = requestFormUpdatePage.createInstance();
+
+        it('update form page object should be defined', () => {
+            expect(updateFormPage).toBeDefined();
         });
-        it('"Type" field must be "Leave w/o pay"', () => {
-            let vacationType = browser.findElement(PROTRACTOR.by.xpath(UPDATEVAC.X_PATHS.pay_type));
-            expect(vacationType.getText()).toEqual('Leave w/o pay');
+
+        describe('check "update request" form', () => {
+            it('"Employee" must be "Vitali Haradkou"', () => {
+                expect(updateFormPage.employee.getText()).toEqual('Vitali Haradkou')
+            });
+
+            it('"Type" field must be "Leave w/o pay"', () => {
+                expect(updateFormPage.leavePayType.getText()).toEqual('Leave w/o pay');
+            });
+
         });
-    });
-    it('should click on "Update request" button', () => {
-        let updateButton = browser.findElement(PROTRACTOR.by.css(UPDATEVAC.CSS_SELECTORS.BUTTONS.update_request));
-        expect(updateButton.isDisplayed()).toBeTruthy();
-        browser.actions().click(updateButton).perform();
+
+        it('should click on "Update request" button', () => {
+            expect(updateFormPage.updateButton.isDisplayed()).toBeTruthy();
+            updateFormPage.updateButton.click();
+        });
     });
 });

@@ -1,11 +1,19 @@
 const protractor = require('protractor');
 const constants = require('../../helpers/constants/index.js');
 const requestFormCreatePage = require('../../helpers/constants/pages/requestForm.page.js')
+const basicPage = require('./abstractPage.po.js');
 
 const browser = protractor.browser;
 
-class RequestFormCreatePage {
+class RequestFormCreatePage extends basicPage {
     constructor() {
+        super();
+    }
+    /**
+     * @description fabrical method
+     */
+    static createInstance() {
+        return new RequestFormCreatePage();
     }
     get employee() {
         return protractor.element(protractor.by.css(requestFormCreatePage.CSS_SELECTORS.INPUTS.employee));
@@ -17,25 +25,20 @@ class RequestFormCreatePage {
         return protractor.element(protractor.by.css(requestFormCreatePage.CSS_SELECTORS.TEXTS.leave_pay_type))
     }
     get comment() {
-        return protractor.element(protractor.by.css(requestFormCreatePage.CSS_SELECTORS.TEXTAREA.comment))
+        return protractor.element(protractor.by.css(requestFormCreatePage.CSS_SELECTORS.TEXTAREA.comment));
     }
     get commentText() {
         return this.comment.getText();
     }
-    /**
-     * @param {string} keys
-     */
-    bindComment(keys) {
-        this.comment.sendKeys(keys);
+    set commentText(text) {
+        this.comment.sendKeys(text);
     }
     get draftButton() {
         return protractor.element(protractor.by.css(requestFormCreatePage.CSS_SELECTORS.BUTTONS.save_as_draft))
     }
-    /**
-     * @description abstract method
-     */
-    static createInstance() {
-        return new RequestFormCreatePage();
-    }
+    load() {
+        throw new Error(`load function is not implement`);
+     }
 }
+
 module.exports = RequestFormCreatePage;
