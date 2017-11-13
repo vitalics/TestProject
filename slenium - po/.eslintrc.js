@@ -18,7 +18,7 @@ module.exports = {
             "windows"
         ],
         "quotes": [
-            "warn",
+            "warning",
             "single"
         ],
         "semi": [
