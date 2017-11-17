@@ -6,7 +6,8 @@
   "scripts": {
     "preinstall": "npm i webdriver-manager -g",
     "postinstall": "gulp webdriver_update",
-    "test": "gulp"
+    "test": "./node_modules/.bin/protractor protractor.conf.js",
+    "gulp": "gulp"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "jasmine": "^2.8.0",
     "jasmine-spec-reporter": "^4.2.1",
     "protractor-jasmine2-html-reporter": "0.0.7",
+    "selenium-server-standalone-jar": "^3.7.1",
     "typescript": "^2.6.1"
   },
   "dependencies": {
@@ -29,6 +31,7 @@
     "node-fetch": "^1.7.3",
     "protractor": "^5.2.0",
     "run-sequence": "^2.2.0",
+    "rxjs": "^5.5.2",
     "selenium-webdriver": "^3.6.0",
     "xmlhttprequest": "^1.8.0"
   }

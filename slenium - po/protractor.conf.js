@@ -1,13 +1,12 @@
 let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-// https://github.com/angular/protractor/issues/1451
-require('protractor/built/logger').Logger.logLevel = 1;
+require('protractor/built/logger').Logger.logLevel = 2;
 var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 
 exports.config = {
     framework: 'jasmine2',
     jasmineNodeOpts: {
         showColors: true,
-        silent: true,
+        silent: false,
         restartBrowserBetweenTests: true,
         defaultTimeoutInterval: 360000,
         print: function () {
@@ -18,12 +17,20 @@ exports.config = {
         './spec/vacation.update.spec.js',
         './spec/vacation.remove.spec.js'
     ],
-    capabilities: {
-        browserName: 'chrome',
-        'chromeOptions': {
-            args: ['--test-type']
+    seleniumAddress: 'http://localhost:4444/wd/hub',
+    multiCapabilities: [
+        {
+            browserName: 'chrome',
+            'chromeOptions': {
+                args: ['--test-type'],
+            }
+        },
+        {
+            browserName: 'firefox',
+            marionette: true,
         }
-    },
+    ],
+    verboseMultiSessions: true,
     onPrepare: function () {
         jasmine.getEnv().addReporter(new SpecReporter(
             {

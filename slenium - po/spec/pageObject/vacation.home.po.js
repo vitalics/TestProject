@@ -1,6 +1,8 @@
 const protractor = require('protractor');
+
 const constants = require('../../helpers/constants/index.js');
-const homePage = require('../../helpers/constants/pages/main.page.js')
+const homeSelectors = require('../../helpers/constants/selectors/main.selectors');
+
 const basicPage = require('./abstractPage.po.js')
 
 const browser = protractor.browser;
@@ -16,7 +18,7 @@ class VacationHomePage extends basicPage {
         return new VacationHomePage();
     }
     get addVacButton() {
-        return browser.element(protractor.by.css(homePage.CSS_SELECTORS.BUTTONS.add_new_vacation))
+        return browser.element(protractor.by.css(homeSelectors.CSS_SELECTORS.BUTTONS.add_new_vacation))
     }
     get title() {
         return browser.getTitle();
@@ -24,6 +26,5 @@ class VacationHomePage extends basicPage {
     load() {
         browser.get(constants.URL)
     }
-
 }
 module.exports = VacationHomePage;

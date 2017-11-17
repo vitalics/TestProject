@@ -1,6 +1,7 @@
 const protractor = require('protractor');
+
 const constants = require('../../helpers/constants/index.js');
-const vacation = require('../../helpers/constants/pages/myVacation.page')
+const vacationSelectors = require('../../helpers/constants/selectors/myVacation.selectors')
 
 const basicPage = require('./abstractPage.po.js');
 
@@ -17,22 +18,22 @@ class RequestPage extends basicPage {
     }
 
     get vacationList() {
-        return protractor.element.all(protractor.by.css(vacation.CSS_SELECTORS.ITEMS.vacation_list));
+        return protractor.element.all(protractor.by.css(vacationSelectors.CSS_SELECTORS.ITEMS.vacation_list));
     }
     get lastVacation() {
         return this.vacationList.last();
     }
     get dropdown() {
-        return this.lastVacation.element(protractor.by.css(vacation.CSS_SELECTORS.BUTTONS.vacation_action_dropdown));
+        return this.lastVacation.element(protractor.by.css(vacationSelectors.CSS_SELECTORS.BUTTONS.vacation_action_dropdown));
     }
     get dropdownUpdateButton() {
-        return this.dropdown.element(protractor.by.css(vacation.CSS_SELECTORS.BUTTONS.dropdown_update_request));
+        return this.dropdown.element(protractor.by.css(vacationSelectors.CSS_SELECTORS.BUTTONS.dropdown_update_request));
     }
     get dropdownDeleteButton() {
-        return this.dropdown.element(protractor.by.css(vacation.CSS_SELECTORS.BUTTONS.dropdown_delete_request));
+        return this.dropdown.element(protractor.by.css(vacationSelectors.CSS_SELECTORS.BUTTONS.dropdown_delete_request));
     }
     get alertMessage() {
-        return protractor.element(protractor.by.css(vacation.CSS_SELECTORS.TEXTS.request_popup_message_successful));
+        return protractor.element(protractor.by.css(vacationSelectors.CSS_SELECTORS.TEXTS.request_popup_message_successful));
     }
 
     /**
