@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Current TS File",
+            "name": "TS File",
             "type": "node",
             "request": "launch",
             "args": [
-                "${relativeFile}"
+                "${workspaceRoot}/src/index.ts"
             ],
             "runtimeArgs": [
                 "-r",

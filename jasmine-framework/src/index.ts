@@ -10,7 +10,7 @@ class Greeter {
         console.log('some test')
     }
     @leDecorator('another test')
-    public anotherMethod() {
+    public anotherMethod(test: string, test2: string) {
         console.log('another test')
     }
     method() {
@@ -18,4 +18,4 @@ class Greeter {
 }
 
 var myClass: Greeter = new Greeter();
-myClass.anotherMethod();
+myClass.anotherMethod('123', '456');
