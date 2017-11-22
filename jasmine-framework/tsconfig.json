@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "sourceMap": true,
+        "outDir": "js",
+        "target": "es5",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "rootDir": "src",
+        "outFile": "lib/index.js"
+    },
+    "include": [
+        "node_modules/@types/**/*.d.ts",
+        "src/**/*.ts"
+    ]
+}
