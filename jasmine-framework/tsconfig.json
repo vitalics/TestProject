@@ -9,7 +9,14 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "rootDir": "src",
-        "outFile": "lib/index.js"
+        "outFile": "lib/index.js",
+        "lib": [
+            "es2015",
+            "es5",
+            "es6",
+            "es7",
+            "es2016"
+        ]
     },
     "include": [
         "node_modules/@types/**/*.d.ts",
