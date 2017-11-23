@@ -1,16 +1,17 @@
 import "reflect-metadata";
 
 import { Compiler } from "../compiler/compiler";
-let compiler = new Compiler();
 
-let test = compiler.CompiledTest;
+
+// let test = compiler.CompiledTest;
+
 export function Test<T extends { new(...args: any[]): {} }>(constructor: T) {
     return class extends constructor implements ExtraOptions {
         constructor(...args: any[]) {
             super(...args)
-            compiler.compile(test);
+            let test = Compiler.getTest();
+            Compiler.compile(test);
         }
-        extra = "Tadah!";
     };
 }
 

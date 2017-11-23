@@ -1,53 +1,56 @@
 import { AbstractCompiler } from "./compiler.d";
 import { writeFile } from "fs";
 export class Compiler implements AbstractCompiler {
-    private compiledTest: string;
-    private jasmine = require('jasmine');
-    private its: string = '';
-    private describe: string = '';
-    private __tempDescription: string;
+    private static its: string = '';
+
+    private static describe: string = '';
+    private static __tempDescription: string;
 
     constructor() {
     }
 
-    public get CompiledTest(): string {
-        return this.compiledTest;
-    }
 
-    compile(target: any) {
-        this.recompile();
+    static compile(target: any) {
+        target = this.compileDescribe(this.its);
         this.writeToFile(target);
     }
-    compileTest(target: Function | object) {
+    static getTest(target?: any): string {
+        return this.describe;
     }
-    preCompileDescribe(description?: string, extraParams?: any): string {
+    static preCompileDescribe(description?: string, extraParams?: any): void {
         this.__tempDescription = description;
         console.log('compile describe');
         this.describe = `describe('${description}',()=>{
-            ${this.its}
+
         })`
         // let realBody = body.substring(extraParams.indexOf("{") + 1, extraParams.lastIndexOf("}"));
         console.log('------------------');
-        return this.describe;
+    }
+
+    static compileDescribe(its: string): string {
+        let idexOfBody = this.describe.lastIndexOf("}");
+        let describeBody = this.describe.substring(this.describe.indexOf("{") + 1, this.describe.lastIndexOf('}'))
+        describeBody += its;
+        return this.describe.slice(0, idexOfBody) + describeBody + '});';
     }
     // compileDescribe(describe: string, body: string) {
     //     let emptyBody = describe.substring(describe.indexOf("{") + 1,describe.lastIndexOf("}"));
-        
+
     // }
-    compileIt(target: Function, description?: string, ...args: any[]) {
+    static compileIt(target: Function, description?: string, ...args: any[]) {
         console.log('Compile it');
         var body = target.toString();
         let realBody = body.substring(body.indexOf("{") + 1, body.lastIndexOf("}"));
         let it = `it('${description}',()=>{${realBody}});`;
         this.its += it;
         console.log('----------------');
-
     }
-    recompile() {
-        console.log('recompile');
-        this.describe = this.preCompileDescribe(this.__tempDescription);
-    }
-    writeToFile(target: any) {
+    // recompile() {
+    //     console.log('recompile');
+    //     this.compileDescribe(this.its);
+    //     // this.describe = this.preCompileDescribe(this.__tempDescription);
+    // }
+    static writeToFile(target: any) {
         let filename = 'spec/file.spec.js';
         writeFile(filename, `${target.toString()}`, (err: NodeJS.ErrnoException) => {
             if (err) {

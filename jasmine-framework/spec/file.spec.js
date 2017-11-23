@@ -1,9 +1,10 @@
+describe('test description', () => {
 
-describe('test describe',()=>{
-    it('should be run',()=>{
-        expect('lol').toBeEqual('lol');
+
+
+    it('another test', () => {
+        console.log('another test');
+    }); it('test', () => {
+        console.log('some test');
     });
-    it('should be test',()=>{
-        expect('lol').toBeEqual('lol')
-    })
-})
+});

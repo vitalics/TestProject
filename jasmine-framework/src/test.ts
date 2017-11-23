@@ -11,8 +11,12 @@ export class TestClass implements ITestClass {
             }
         }
     }
+    public execute<T>(someClass: T): T {
+        return someClass;
+    }
 }
 export interface ITestClass {
     beforeEach(...callbacks: Function[]): void
     its(...callbacks: Function[]): void
+    execute<T>(Someclass: T): void
 }

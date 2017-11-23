@@ -7,7 +7,7 @@ export function describe(description: string) {
     return function (target: Function) {
         console.log(`describe(${description}) called on: `, target);
         console.log(target.toString())
-        compiler.preCompileDescribe(description)
+        Compiler.preCompileDescribe(description)
     }
 }
 // export function describe<T extends { new(...args: any[]): {} }>(constructor: T) {

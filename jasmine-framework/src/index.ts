@@ -21,7 +21,8 @@ class Greeter {
         console.log('another test')
     }
     method() {
+        console.log('method');
     }
 }
-
-var myClass: Greeter = new Greeter(testClass);
+// var myClass: Greeter = new Greeter(testClass);
+testClass.execute(new Greeter(testClass));

@@ -1,3 +1,3 @@
 export interface AbstractCompiler {
-    compile(target: any): void
+    // compile(target: any): void
 }
