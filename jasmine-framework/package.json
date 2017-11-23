@@ -14,6 +14,8 @@
     "protractor": "^5.2.0"
   },
   "devDependencies": {
+    "@types/jasmine": "^2.8.2",
+    "jasmine": "^2.8.0",
     "reflect-metadata": "^0.1.10",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
