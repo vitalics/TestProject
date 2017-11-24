@@ -9,8 +9,10 @@ export function Test<T extends { new(...args: any[]): {} }>(constructor: T) {
     return class extends constructor implements ExtraOptions {
         constructor(...args: any[]) {
             super(...args)
-            let test = Compiler.getTest();
-            Compiler.compile(test);
+            this.compile();
+        }
+        compile() {
+            Compiler.compile(Compiler.getTest())
         }
     };
 }

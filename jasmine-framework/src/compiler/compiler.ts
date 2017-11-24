@@ -20,9 +20,7 @@ export class Compiler implements AbstractCompiler {
     static preCompileDescribe(description?: string, extraParams?: any): void {
         this.__tempDescription = description;
         console.log('compile describe');
-        this.describe = `describe('${description}',()=>{
-
-        })`
+        this.describe = `describe('${description}',()=>{})`
         // let realBody = body.substring(extraParams.indexOf("{") + 1, extraParams.lastIndexOf("}"));
         console.log('------------------');
     }
