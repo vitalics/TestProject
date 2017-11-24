@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { Compiler } from "../compiler/compiler";
 // let compiler: Compiler = new Compiler();
-export function leDecorator(description: string): any {
+export function it(description: string): any {
     return (target: any, propertyKey: string, descriptor: PropertyDescriptor): any => {
         var oldValue = descriptor.value;
 

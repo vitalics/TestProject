@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { describe, leDecorator, Test } from "./decorators";
+import { describe, it, Test } from "./decorators";
 import { ITestClass, TestClass } from "./test";
 
 let testClass: TestClass = new TestClass();
@@ -12,11 +12,11 @@ class Greeter {
         testClass.its(this.anotherMethod, this.getSomeValue)
     }
 
-    @leDecorator("test")
+    @it("test")
     public getSomeValue() {
         console.log('some test')
     }
-    @leDecorator('another test')
+    @it('another test')
     public anotherMethod() {
         console.log('another test')
     }
