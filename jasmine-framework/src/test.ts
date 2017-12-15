@@ -1,22 +1,31 @@
 export class TestClass implements ITestClass {
     constructor() { }
-    public beforeEach(...callBacks: Function[]): void { }
+    public beforeEach(...callBacks: Function[]): void {
+        this.getFcnContext(...callBacks)
+    }
     public its(...callbacks: Function[]): void {
-        for (let index = 0; index < callbacks.length; index++) {
+        this.getFcnContext(...callbacks);
+    }
+    public helpers(...callbacks: Function[]) {
+        this.getFcnContext(...callbacks);
+    }
+
+    private getFcnContext<T>(...args: any[]): void {
+        for (let index = 0; index < args.length; index++) {
             try {
-                let executedFcn = callbacks[index];
+                let executedFcn = args[index];
                 executedFcn();
             } catch (error) {
                 throw new Error(error)
             }
         }
     }
-    public execute<T>(someClass: T): T {
+    public executeTest<T>(someClass: T): T {
         return someClass;
     }
 }
 export interface ITestClass {
     beforeEach(...callbacks: Function[]): void
     its(...callbacks: Function[]): void
-    execute<T>(Someclass: T): void
+    executeTest<T>(Someclass: T): void
 }
