@@ -1,25 +1,25 @@
-import "reflect-metadata";
-import { Compiler } from '../compiler/compiler';
-import { Command } from "selenium-webdriver";
-let compiler: Compiler = new Compiler();
+import { writeFile } from 'fs';
+import { Executor, DescriptionNode, TestNode, TestTypes, getStaticMemebers } from '../compiler/executor';
 
-export function describe(description: string) {
-    return function (target: Function) {
-        console.log(`describe(${description}) called on: `, target);
-        console.log(target.toString())
-        Compiler.preCompileDescribe(description)
+export function describe(describe: DescriptionNode) {
+  return (target: any): any => {
+    describe.className = target;
+    Executor.registerDescribe(describe);
+    const staticMembers = getStaticMemebers(describe, describe.className);
+
+    for (const i in describe.nodes) {
+      const nodeElem = describe.nodes[i];
+      for (const staticMember of staticMembers) {
+        if (
+          staticMember.description === nodeElem.description &&
+          staticMember.keyword === nodeElem.keyword &&
+          staticMember.name === nodeElem.name
+        ) {
+          Object.assign(describe.nodes[i], { ...staticMember });
+        }
+      }
     }
-}
-// export function describe<T extends { new(...args: any[]): {} }>(constructor: T) {
-//     return class extends constructor implements Describe {
-//         constructor(...args: any[]) {
-//             super(...args)
-//             compiler.compileDescribe(args);
-//         }
-//         extra = "Tadah!";
-//     };
-// }
-
-interface Describe {
-    text: string;
+    console.log(describe.nodes);
+    Executor.execute();
+  };
 }

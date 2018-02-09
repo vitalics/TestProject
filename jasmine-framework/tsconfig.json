@@ -4,12 +4,10 @@
         "noImplicitAny": true,
         "removeComments": true,
         "sourceMap": true,
-        "outDir": "js",
         "target": "es5",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "rootDir": "src",
-        "outFile": "lib/index.js",
+         "rootDir": ".",
         "lib": [
             "es2015",
             "es5",

@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dts-dom": "^2.0.1",
     "jasmine": "^2.8.0",
+    "jasmine-spec-reporter": "^4.2.1",
     "protractor": "^5.2.0"
   },
   "devDependencies": {
