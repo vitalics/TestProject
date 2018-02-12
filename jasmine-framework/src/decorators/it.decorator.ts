@@ -1,17 +1,13 @@
 import 'reflect-metadata';
-import { Executor, TestNode, TestTypes, getStaticMemebers } from '../compiler/executor';
+import { Executor, TestNode, TestTypes, TNode, isTNode, Class, registerTestNode, isClass } from '../compiler';
 
-export function it(description: string): any {
-  return (target: any, key: string, descriptor: any): any => {
-    var oldValue = descriptor.value;
+export function it(tNode: TNode | string): any {
+  return (target: any, key: string, descriptor: TypedPropertyDescriptor<() => any>): typeof descriptor => {
+    const fnReturnType = (false as true) && descriptor.value();
 
-    const node: TestNode = {
-      description,
-      keyword: TestTypes.it,
-      name: key
-    };
+    console.log(fnReturnType);
 
-    Executor.registerTestNode(node);
+    registerTestNode(tNode, descriptor, target, key);
 
     return descriptor;
   };

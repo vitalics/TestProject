@@ -4,14 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-        // {
-        //     "type": "chrome",
-        //     "request": "launch",
-        //     "name": "Attach to Chrome",
-        //     "port": 9222,
-        //     "webRoot": "${workspaceRoot}/spec/"
-        // },
         {
             "name": "TS File",
             "type": "node",
@@ -63,7 +55,7 @@
             "type": "node",
             "request": "launch",
             "args": [
-                "${workspaceRoot}/classes.ts",
+                "${workspaceRoot}/index.ts",
             ],
             "runtimeArgs": [
                 "-r",

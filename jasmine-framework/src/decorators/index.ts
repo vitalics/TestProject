@@ -1,2 +1,2 @@
-export { describe } from './describe.decorator';
-export { it } from './it.decorator';
+export * from './describe.decorator';
+export * from './it.decorator';

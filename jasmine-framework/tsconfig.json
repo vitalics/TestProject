@@ -4,10 +4,18 @@
         "noImplicitAny": true,
         "removeComments": true,
         "sourceMap": true,
-        "target": "es5",
+        "target": "es6",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-         "rootDir": ".",
+        "baseUrl": "./src",
+        "rootDirs": [
+            "./src"
+        ],
+        "paths": {
+            "src":[
+                "./src"
+            ]
+        },
         "lib": [
             "es2015",
             "es5",
@@ -16,6 +24,9 @@
             "es2016"
         ]
     },
+    "exclude": [
+        "node_modules"
+    ],
     "include": [
         "node_modules/@types/**/*.d.ts",
         "src/**/*.ts"

@@ -1,3 +1,1 @@
-export interface AbstractCompiler {
-    // compile(target: any): void
-}
+export interface AbstractCompiler {}

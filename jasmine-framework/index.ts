@@ -1,24 +1,56 @@
-import { describe, it } from './src/decorators/';
+import { describe, it } from './src/decorators';
+
+const someValue = 3;
+
+@describe({ description: 'test', priority: 2 })
+class A {
+  public a = 1;
+  constructor() {}
+
+  @it({ description: 'temp' })
+  public simpleTest() {
+    console.log(this.a);
+  }
+}
 
 @describe({ description: 'test', priority: 1 })
-class B {
+class B extends A {
   public a = 1;
 
-  @it('test')
-  public testmethod() {
-    console.log(this.a);
-    this.a = 13;
-    console.log(this.a);
+  public constructor() {
+    super();
+    const initValue = 3;
+    console.log(initValue);
   }
 
-  @it('test')
-  public testmethod2() {
+  @it({ description: 'test iterator' })
+  public *testmethod(value: number): IterableIterator<number> {
+    let num = 1;
+    console.log(num);
+    yield num;
+    num++;
+    console.log(num);
+    return num;
+  }
+
+  @it({ description: 'test' })
+  public async testmethod2() {
     console.log(this.a);
   }
-  @it('test static ')
+  @it({ description: 'test static' })
   public static staticMember() {
     console.log('static');
   }
+  private simplePromise(num: number = 1) {
+    return new Promise((resolve, reject) => {
+      if (num <= 5) {
+        resolve(num);
+        console.log('num <= 5');
+      } else {
+        reject(num);
+        console.log('num > 5');
+      }
+      return num;
+    });
+  }
 }
-const a = new B();
-a.a = 1;
