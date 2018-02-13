@@ -1,19 +1,24 @@
-import { describe, it } from './src/decorators';
+import { descr, itt } from './src/decorators';
+
+import { browser } from 'protractor';
 
 const someValue = 3;
 
-@describe({ description: 'test', priority: 2 })
+@descr({ description: 'test', priority: 2 })
 class A {
   public a = 1;
   constructor() {}
 
-  @it({ description: 'temp' })
+  @itt({ description: 'temp' })
   public simpleTest() {
+    browser.get('vk.com');
+    browser.sleep(5000);
     console.log(this.a);
+    expect(this.a).toBe(1);
   }
 }
 
-@describe({ description: 'test', priority: 1 })
+@descr({ description: 'test', priority: 1 })
 class B extends A {
   public a = 1;
 
@@ -23,7 +28,7 @@ class B extends A {
     console.log(initValue);
   }
 
-  @it({ description: 'test iterator' })
+  @itt({ description: 'test iterator' })
   public *testmethod(value: number): IterableIterator<number> {
     let num = 1;
     console.log(num);
@@ -33,11 +38,11 @@ class B extends A {
     return num;
   }
 
-  @it({ description: 'test' })
+  @itt({ description: 'test' })
   public async testmethod2() {
     console.log(this.a);
   }
-  @it({ description: 'test static' })
+  @itt({ description: 'test static' })
   public static staticMember() {
     console.log('static');
   }

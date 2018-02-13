@@ -1,14 +1,16 @@
+// import { Executor } from './src/compiler';
 const path = require('path');
 
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: [ './*.spec.ts' ],
+  seleniumAddress: 'http://localhost:4443/wd/hub',
+  specs: [ './index.spec.ts' ],
 
   capabilities: {
     browserName: 'chrome',
     chromeOptions: { args: [ '--disable-popup-blocking', '--disable-translate' ] }
   },
   skipSourceMapSupport: true,
+  directConnection: true,
 
   maxSessions: 15,
   allScriptsTimeout: 600000,
@@ -17,6 +19,7 @@ exports.config = {
   debug: true,
   beforeLaunch: () => {
     require('ts-node').register();
+    // require('jasmine-ts');
   },
 
   baseUrl: 'http://tele2.nl',
@@ -24,7 +27,6 @@ exports.config = {
     browser.waitForAngularEnabled(false);
 
     const { SpecReporter } = require('jasmine-spec-reporter');
-    browser.waitForAngularEnabled(false);
 
     jasmine.getEnv().addReporter(
       new SpecReporter({

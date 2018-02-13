@@ -13,11 +13,13 @@
     "dts-dom": "^2.0.1",
     "jasmine": "^2.8.0",
     "jasmine-spec-reporter": "^4.2.1",
-    "protractor": "^5.2.0"
+    "protractor": "^5.2.0",
+    "ts-emitter": "^0.4.0"
   },
   "devDependencies": {
     "@types/jasmine": "^2.8.2",
     "jasmine": "^2.8.0",
+    "jasmine-ts": "^0.2.1",
     "reflect-metadata": "^0.1.10",
     "ts-node": "^3.3.0",
     "tsconfig-paths": "^3.1.1",

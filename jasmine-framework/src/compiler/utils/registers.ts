@@ -3,28 +3,23 @@ import { Class, TestNode, TestTypes, isTNode, TNode, DescriptionNode } from '../
 import { Executor } from './executor';
 
 export function registerTestNode(
-  tNode: TNode | string,
+  description: string = '',
   descriptor: TypedPropertyDescriptor<() => any>,
   target: any,
   key: string
 ) {
-  let description = '';
-  let trueNode: TNode | null = null;
-
-  isTNode(tNode) ? (trueNode = tNode) : (description = tNode);
-
   var oldValue = descriptor.value;
 
   const protoName = Object.getPrototypeOf(oldValue).constructor.name;
 
-  let generator = false;
-  if (protoName === 'GeneratorFunction') {
-    generator = true;
-  }
-  let async = trueNode.async || false;
-  if (async && protoName === 'GeneratorFunction') {
-    throw new Error('async function cannot be with ' + protoName);
-  }
+  // let generator = false;
+  // if (protoName === 'GeneratorFunction') {
+  //   generator = true;
+  // }
+  // let async = trueNode.async || false;
+  // if (async && protoName === 'GeneratorFunction') {
+  //   throw new Error('async function cannot be with ' + protoName);
+  // }
   let trueParent: Class = null;
   const parentCtor = <Class>target.constructor;
   const parent = <Class>target;
@@ -38,15 +33,14 @@ export function registerTestNode(
     trueParent.nodes = [];
   }
   const node: TestNode = {
-    async,
-    generator,
     parent: trueParent,
-    description: trueNode.description || description,
+    description: description,
     keyword: TestTypes.it,
     name: key,
     static: isStatic
   };
   trueParent.nodes.push(node);
+  return node;
 }
 
 export function registerDecribeNode(describe: DescriptionNode, target: any) {
@@ -58,5 +52,7 @@ export function registerDecribeNode(describe: DescriptionNode, target: any) {
   describe.class = target;
   describe.parent = target.__proto__;
 
-  Executor.registerDescribe(describe);
+  return describe;
+
+  // Executor.registerDescribe(describe);
 }

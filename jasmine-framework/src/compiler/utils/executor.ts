@@ -35,8 +35,6 @@ export class Executor {
         if (node.generator && !node.static) {
           exemplar[node.name]();
         }
-        // node.async? await
-        // node.static ? className[node.name]() : exemplar[node.name]();
       }
     }
   }

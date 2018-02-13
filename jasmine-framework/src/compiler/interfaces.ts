@@ -21,7 +21,7 @@ export interface TestNode extends TNode {
 export interface ClassConstructor extends Class {
   new (): Class;
 }
-export class Class {
+export interface Class {
   [key: string]: any;
 
   name: string;

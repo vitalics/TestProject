@@ -1,13 +1,12 @@
 import 'reflect-metadata';
 import { Executor, TestNode, TestTypes, TNode, isTNode, Class, registerTestNode, isClass } from '../compiler';
 
-export function it(tNode: TNode | string): any {
+export function itt(description: string): any {
   return (target: any, key: string, descriptor: TypedPropertyDescriptor<() => any>): typeof descriptor => {
-    const fnReturnType = (false as true) && descriptor.value();
+    const newDescription = description || '';
+    const tNode = registerTestNode(newDescription, descriptor, target, key);
 
-    console.log(fnReturnType);
-
-    registerTestNode(tNode, descriptor, target, key);
+    jasmine.getEnv().it(description, descriptor.value);
 
     return descriptor;
   };

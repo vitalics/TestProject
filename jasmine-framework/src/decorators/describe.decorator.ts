@@ -2,10 +2,11 @@
 /// TS_IGNORE
 import { DescriptionNode, Executor, registerDecribeNode } from '../compiler';
 
-export function describe(describe: DescriptionNode) {
-  return (target: any): void => {
-    registerDecribeNode(describe, target);
+export function descr(describe: string) {
+  return (target: any): any => {
+    const dNode = registerDecribeNode({ description: describe }, target);
+    console.log(dNode);
 
-    Executor.execute();
+    const describeJasmine = jasmine.getEnv().describe(describe, <any>dNode.class);
   };
 }
