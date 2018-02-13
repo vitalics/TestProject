@@ -6,7 +6,7 @@ export function itt(description: string): any {
     const newDescription = description || '';
     const tNode = registerTestNode(newDescription, descriptor, target, key);
 
-    jasmine.getEnv().it(description, descriptor.value);
+    // jasmine.getEnv().it(description, descriptor.value);
 
     return descriptor;
   };

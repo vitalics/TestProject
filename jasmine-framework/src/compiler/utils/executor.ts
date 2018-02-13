@@ -17,24 +17,7 @@ export class Executor {
       const cls = test.class;
       const exemplar = new cls();
       for (const node of cls.nodes) {
-        if (node.static && node.async) {
-          await cls[node.name]();
-        }
-        if (node.static && !node.async) {
-          cls[node.name]();
-        }
-        if (!node.static && node.async) {
-          await exemplar[node.name]();
-        }
-        if (!node.static && !node.async) {
-          exemplar[node.name]();
-        }
-        if (node.generator && node.static) {
-          cls[node.name]();
-        }
-        if (node.generator && !node.static) {
-          exemplar[node.name]();
-        }
+        
       }
     }
   }

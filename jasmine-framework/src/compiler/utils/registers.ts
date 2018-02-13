@@ -1,6 +1,7 @@
 import { isClass } from './isClass';
 import { Class, TestNode, TestTypes, isTNode, TNode, DescriptionNode } from '../interfaces';
 import { Executor } from './executor';
+import { ClassConstructor } from 'index';
 
 export function registerTestNode(
   description: string = '',
@@ -12,26 +13,26 @@ export function registerTestNode(
 
   const protoName = Object.getPrototypeOf(oldValue).constructor.name;
 
-  // let generator = false;
-  // if (protoName === 'GeneratorFunction') {
-  //   generator = true;
-  // }
-  // let async = trueNode.async || false;
-  // if (async && protoName === 'GeneratorFunction') {
-  //   throw new Error('async function cannot be with ' + protoName);
-  // }
-  let trueParent: Class = null;
-  const parentCtor = <Class>target.constructor;
-  const parent = <Class>target;
+  let trueParent: ClassConstructor = null;
+  const parentCtor = <ClassConstructor>target.constructor;
+  const parent = <ClassConstructor>target;
+
   let isStatic = false;
   trueParent = parentCtor;
+
   if (!isClass(parentCtor) && isClass(parent)) {
     isStatic = true;
     trueParent = parent;
   }
+
   if (!trueParent.hasOwnProperty('nodes')) {
     trueParent.nodes = [];
   }
+
+  if (!trueParent.hasOwnProperty('exemplar')) {
+    trueParent.exemplar = new trueParent();
+  }
+
   const node: TestNode = {
     parent: trueParent,
     description: description,
@@ -39,6 +40,7 @@ export function registerTestNode(
     name: key,
     static: isStatic
   };
+
   trueParent.nodes.push(node);
   return node;
 }

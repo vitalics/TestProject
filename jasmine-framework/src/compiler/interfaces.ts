@@ -15,7 +15,7 @@ export interface TestNode extends TNode {
 
   static?: boolean;
   generator?: boolean;
-  parent?: Class;
+  parent?: ClassConstructor;
 }
 
 export interface ClassConstructor extends Class {
@@ -26,6 +26,7 @@ export interface Class {
 
   name: string;
   nodes?: TestNode[];
+  exemplar?: Class;
 }
 
 interface ClassLike<T extends Class> {

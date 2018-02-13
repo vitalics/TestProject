@@ -1,48 +1,43 @@
 import { descr, itt } from '../src/decorators';
 
 import { browser } from 'protractor';
-import { autoExpect } from '../src/decorators/addToTest.decorator';
 
 const someValue = 3;
 
 @descr('test')
 class A {
-  @autoExpect public a = 1;
+  public a = 1;
   constructor() {}
 
   @itt('temp')
   public simpleTest() {
-    expect(this.a).toBe(1);
+    console.log('class A method simpleTest');
+    console.log('context for A clas', this.a);
   }
 }
 
 @descr('test')
 class B extends A {
-  @autoExpect public b = 1;
+  public b = 1;
 
   public constructor() {
     super();
-    const initValue = 3;
-    console.log(initValue);
   }
 
   @itt('test iterator')
-  public testmethod(value: number): number {
-    let num = 1;
-    // console.log(num);
-    // yield num;
-    num++;
-    console.log(num);
-    return num;
+  public testmethod1(value: number): void {
+    console.log('class B method testmethod1');
+    console.log('context for B clas', this.a, this.b);
   }
 
   @itt('test')
   public async testmethod2() {
-    console.log(this.b);
+    console.log('class B method testmethod2');
+    console.log('context for B clas', this.a, this.b);
   }
   @itt('test static')
   public static staticMember() {
-    console.log('static');
+    console.log('class B method staticMember');
   }
   private simplePromise(num: number = 1) {
     return new Promise((resolve, reject) => {
