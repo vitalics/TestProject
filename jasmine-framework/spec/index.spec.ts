@@ -1,41 +1,44 @@
-import { descr, itt } from '../src/decorators';
+import * as Jasmine from '../src/decorators';
 
-import { browser } from 'protractor';
+import { A } from './index2.spec';
 
 const someValue = 3;
+const someValue1 = 4;
 
-@descr('test')
-class A {
-  public a = 1;
-  constructor() {}
-
-  @itt('temp')
-  public simpleTest() {
-    console.log('class A method simpleTest');
-    console.log('context for A clas', this.a);
-  }
-}
-
-@descr('test')
-class B extends A {
+@Jasmine.describe('test')
+class B  {
   public b = 1;
 
   public constructor() {
-    super();
+    // super();
+  }
+  @Jasmine.beforeAll()
+  public testmethodBeforeAll(value: number): void {
+    console.log('before all class B executing');
   }
 
-  @itt('test iterator')
+  @Jasmine.afterAll()
+  public testmethodAfterAll(value: number): void {
+    console.log('after all class B executing');
+  }
+
+  @Jasmine.it('test iterator')
   public testmethod1(value: number): void {
     console.log('class B method testmethod1');
-    console.log('context for B clas', this.a, this.b);
   }
 
-  @itt('test')
+  @Jasmine.it('temp', [ someValue1 ])
+  public async simpleTestAsync(someArg: number) {
+    await this.simplePromise();
+    console.log('class A method simpleTest async');
+  }
+
+  @Jasmine.it('test')
   public async testmethod2() {
     console.log('class B method testmethod2');
-    console.log('context for B clas', this.a, this.b);
   }
-  @itt('test static')
+
+  @Jasmine.it('test static')
   public static staticMember() {
     console.log('class B method staticMember');
   }

@@ -1,17 +1,22 @@
 import { isClass } from './isClass';
 import { Class, TestNode, TestTypes, isTNode, TNode, DescriptionNode } from '../interfaces';
 import { Executor } from './executor';
-import { ClassConstructor } from 'index';
+import { ClassConstructor } from '../interfaces';
 
 export function registerTestNode(
-  description: string = '',
+  type: TestTypes,
+  argsVars: any[] = [],
   descriptor: TypedPropertyDescriptor<() => any>,
   target: any,
-  key: string
+  key: string,
+  description: string = ''
 ) {
   var oldValue = descriptor.value;
 
-  const protoName = Object.getPrototypeOf(oldValue).constructor.name;
+  descriptor.value = function(...args: any[]) {
+    var a = args.map((a) => JSON.stringify(a)).join();
+    var result = oldValue.apply(this, argsVars);
+  };
 
   let trueParent: ClassConstructor = null;
   const parentCtor = <ClassConstructor>target.constructor;
@@ -36,7 +41,7 @@ export function registerTestNode(
   const node: TestNode = {
     parent: trueParent,
     description: description,
-    keyword: TestTypes.it,
+    keyword: type,
     name: key,
     static: isStatic
   };
@@ -47,12 +52,14 @@ export function registerTestNode(
 
 export function registerDecribeNode(describe: DescriptionNode, target: any) {
   const isCls = isClass(target);
+  let trueparent: ClassConstructor;
   if (!isCls) {
     throw new Error('describe must be decorating a class');
   }
 
   describe.class = target;
-  describe.parent = target.__proto__;
+  const parent = target.__proto__;
+  isClass(parent) ? (describe.parent = parent) : (describe.parent = null);
 
   return describe;
 

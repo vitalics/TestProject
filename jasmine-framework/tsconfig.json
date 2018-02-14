@@ -7,15 +7,6 @@
         "target": "es6",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "baseUrl": "./src",
-        "rootDirs": [
-            "./src"
-        ],
-        "paths": {
-            "src":[
-                "./src"
-            ]
-        },
         "lib": [
             "es2015",
             "es5",
