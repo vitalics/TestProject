@@ -7,7 +7,9 @@
     "preinstall": "npm i webdriver-manager -g",
     "postinstall": "gulp webdriver_update",
     "test": "./node_modules/.bin/protractor protractor.conf.js",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +35,8 @@
     "run-sequence": "^2.2.0",
     "rxjs": "^5.5.2",
     "selenium-webdriver": "^3.6.0",
-    "xmlhttprequest": "^1.8.0"
-  }
+    "xmlhttprequest": "^1.8.0",
+    "snyk": "^1.88.0"
+  },
+  "snyk": true
 }
