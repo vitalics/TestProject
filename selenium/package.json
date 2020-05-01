@@ -6,7 +6,9 @@
   "scripts": {
     "start": "tsc index.ts",
     "poststart": "node index.js",
-    "preinstall": "npm i ts-node -g && npm i typescript -g"
+    "preinstall": "npm i ts-node -g && npm i typescript -g",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "keywords": [
     "node",
@@ -28,6 +30,8 @@
     "@types/selenium-webdriver": "^3.0.8",
     "@types/webdriverio": "^4.8.6",
     "selenium-webdriver": "^3.6.0",
-    "webdriverio": "^4.8.0"
-  }
+    "webdriverio": "^4.8.0",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
